@@ -1,0 +1,100 @@
+<script type="text/ng-template" id="nodes_renderer2.html">
+  <div >
+    <div class="pull-left tree-handle" ui-tree-handle>
+    </div>
+    <div class="pull-left tree-btn">
+      <a class="md-icon-button md-primary" data-nodrag ng-click="toggle(this)">
+            <span class="glyphicon" ng-class="{
+              'glyphicon-chevron-right': collapsed,
+              'glyphicon-chevron-down': !collapsed
+              }">
+            </span>
+      </a>
+    </div>
+    <div class="tree-node-content">
+      <!--<div ng-show = "isConditionTemplateVisible()">-->
+        <form class="form-horizontal" role="form">
+          <div class="form-group form-group-sm">
+            <div ng-show = "isConditionNodeTemplate(node.conditionTemplateType)">
+                <div class="col-sm-1">
+                  <select class="form-control input-sm" id="conditionType" name="conditionType" ng-change="setSelCondition(this)"  data-ng-model="node.conditionType">
+                    <option value="if">IF</option>
+                    <option value="then">THEN</option>
+                    <option value="else">ELSE</option>
+                    <option value="when">WHEN</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <input class="form-control input-sm" size="1" type="text" id="sm">
+                </div>
+            </div>
+            <div ng-show = "isTextNodeTemplate(node.conditionTemplateType)">
+              <div class="col-sm-10">
+                <input class="form-control input-sm" type="text" id="lg">
+              </div>
+            </div>
+            <a class="pull-right md-icon-button md-primary" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+            <!--<a class="pull-right md-icon-button md-primary" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>-->
+            <span class="dropdown">
+              <button class="pull-left dropdown-toggle btn-icon" data-nodrag  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <ul class="pull-right dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li ng-repeat="option in templateOptions">
+                  <a role="menuitem" ng-click="setTemplateType(option, this)">{{option}}</a>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </form>
+      <!--</div>-->
+      <!--<div ng-show = "isTextTemplateVisible()">-->
+        <!--<form class="form-horizontal" role="form">-->
+          <!--<div class="form-group form-group-sm">-->
+            <!--<div class="col-sm-11">-->
+              <!--<input class="form-control input-sm" type="text" id="lg">-->
+            <!--</div>-->
+            <!--<span class="dropdown">-->
+              <!--<button class="pull-left dropdown-toggle btn-icon" data-nodrag  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">-->
+                <!--<span class="glyphicon glyphicon-plus"></span>-->
+              <!--</button>-->
+              <!--<ul class="pull-right dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">-->
+                <!--<li ng-repeat="option in templateOptions">-->
+                  <!--<a role="menuitem" ng-click="setTemplateType(option, this)">{{option}}</a>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</span>-->
+            <!--<a class="pull-right md-icon-button md-primary" data-nodrag ng-click="remove(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-remove"></span></a>-->
+          <!--</div>-->
+        <!--</form>-->
+        <!--</div>-->
+    </div>
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer2.html'">
+    </li>
+  </ol>
+</script>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Basic Example</h3>
+
+    <button ng-click="expandAll()">Expand all</button>
+    <button ng-click="collapseAll()">Collapse all</button>
+    <select class="form-control" size="1" id="ruleConditionForm" name="ruleConditionForm" ng-model="ruleConditionFormType" ng-change="showSelValue()">
+      <option value="conditionTemplate" selected="selected">Condition Template</option>
+      <option value="textTemplate">Text</option>
+    </select>
+  </div>
+</div>
+
+  <div class="col-sm-12">
+    <h3>Tree 2 - Destination</h3>
+    <div ui-tree id="tree2-root" data-clone-enabled="true">
+      <ol ui-tree-nodes="" ng-model="tree2">
+        <li ng-repeat="node in tree2" ui-tree-node ng-include="'nodes_renderer2.html'"></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
